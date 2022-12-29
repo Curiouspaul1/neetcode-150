@@ -9,5 +9,5 @@ class Solution:
                 grouped_anagrams[m] = c
             else:
                 grouped_anagrams[m] = [i]
-        grouped_anagrams = list(grouped_anagrams.values())
+        grouped_anagrams = grouped_anagrams.values()
         return grouped_anagrams
