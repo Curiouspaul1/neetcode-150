@@ -2,8 +2,6 @@ class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         i = 0
         res = []
-        diff_count = 0
-        last_element = None
         hash_map = {}
         while i < len(nums):
             val = nums[i]
