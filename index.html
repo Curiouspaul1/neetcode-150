@@ -12,19 +12,26 @@
 </head>
 
 <body onload="brython()">
+    <div id="container">
+        <h2>Weekly Pairing | NEETCODE 150</h2>
+
+        <ul id="pairs-container"></ul>
+    </div>
+    
 
 <script type="text/python">
 from browser import (
     document,
+    timer,
     html
 )
+from browser.local_storage import storage
 import random
 
 usernames = [
     "Bashorun",
     "Blanked",
     "C",
-    "Donald",
     "Engr-TStark",
     "Enutrof",
     "Richie",
@@ -42,6 +49,7 @@ usernames = [
 
 cmap = {}
 pairings = []
+pc = document['pairs-container']
 
 def gen_pair(arr):
     res = []
@@ -58,23 +66,79 @@ def gen_pair(arr):
 
 
 def gen_pairings(pair, c1=False, c2=False):
+    storage['pairings_set'] = '1'
     if len(pairings) == len(usernames) // 2:
         return
     if c1 is False and c2 is False:
         if pair[0] != pair[1]:
             cmap[usernames[pair[0]]] = usernames[pair[1]]
+            storage[usernames[pair[0]]] = usernames[pair[1]]
             pairings.append(pair)
     npair = gen_pair(usernames)
     cond1 = usernames[npair[0]] in cmap.keys() or usernames[npair[0]] in cmap.values()
     cond2 = usernames[npair[1]] in cmap.keys() or usernames[npair[1]] in cmap.values()
     gen_pairings(npair, cond1, cond2)
 
-gen_pairings(gen_pair(usernames))
 
-for x, y in pairings:
-    document <= html.LI(html.B(usernames[x] + " <---> " + usernames[y]))
+
+
+def show_pairings():
+    if 'pairings_set' not in storage.keys():
+        gen_pairings(gen_pair(usernames))
+
+    pc.clear()
+    for x, y in storage.items():
+        if x != 'pairings_set':
+            pc <= html.LI(x + " <---> " + y)
+            pc <= html.BR()
+
+def update_ui():
+    storage.clear()
+    gen_pairings(gen_pair(usernames))
+
+
+show_pairings()
+#timer.set_interval(pc.clear, 3000)
+#timer.set_interval(update_ui, 3000)
+
 </script>
 
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500&display=swap');
+    *{
+        font-size: 16px;
+        font-family: 'Montserrat', sans-serif;
+        margin: 0 auto;
+    }
+
+    body {
+        background-color: rgb(85, 141, 244);
+    }
+
+    #container {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 5%;
+        color: antiquewhite;
+    }
+
+    #container h2{
+        font-size: 2rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 5%;
+    }
+
+    #container li {
+        font-weight: 300;
+    }
+
+    #container li:hover {
+        color:rgb(13, 10, 82);
+        font-size: 14px;
+        cursor: pointer;
+    }
+</style>
 
 </body>
 
