@@ -13,7 +13,6 @@ function threeSum(nums) {
     let left = i+1
     let right = nums.length-1
 
-    
     while (left < right) {
       const sum = nums[i] + nums[right] + nums[left]
       if (sum===0) {
