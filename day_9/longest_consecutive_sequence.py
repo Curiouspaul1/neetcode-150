@@ -11,7 +11,6 @@ class Solution:
             if nums[i-1] != nums[i]:
                 if nums[i] == nums[i-1] + 1:
                     count += 1
-                    print(count)
                 else:
                     longest_count = max(longest_count, count)
                     count = 1
