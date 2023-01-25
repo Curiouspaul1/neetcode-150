@@ -16,13 +16,14 @@
 def binarySearch(nums, target):
     l, r = 0, len(nums) - 1
     while l <= r:
-        m = l + ((r - l) // 2)  # (l + r) // 2 can lead to overflow
-        if nums[m] > target:
-            r = m - 1
-        elif nums[m] < target:
-            l = m + 1
+        mid = l +  ((l+ r)// 2)
+
+        if nums[mid] < target:
+            l = mid + 1
+        elif nums[mid] > target:
+            r = mid -1
         else:
-            return m
+            return mid
     return -1
 
 nums = [1,0,3,5,9,12]
